@@ -1,0 +1,308 @@
+\documentclass{article}
+
+
+\usepackage{arxiv}
+
+\usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
+\usepackage{hyperref}       % hyperlinks
+\usepackage{url}            % simple URL typesetting
+\usepackage{booktabs}       % professional-quality tables
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{microtype}      % microtypography
+\usepackage{lipsum}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{comment}
+\usepackage{caption}
+\graphicspath{ {./images/} }
+\usepackage[spanish]{babel}
+
+\title{TP 1.2 - Estudio económico-matemático de apuestas en la ruleta}
+
+\author{
+ Aldana Muñoz \\
+  Ingeniería en Sistemas de Información\\
+  Universidad Tecnológica Nacional\\
+  Rosario, CP 2000 \\
+  \texttt{munozbaldana@gmail.com} \\
+  %% examples of more authors
+   \And
+ Martina Elicegui\\
+  Ingeniería en Sistemas de Información\\
+  Universidad Tecnológica Nacional\\
+  Rosario, CP 2000 \\
+  \texttt{martina.elicegui@gmail.com} \\
+  \And
+  \hspace{0.9cm}Karen Galarza \\
+  \hspace{0.9cm}Ingenieria en Sistemas de Información\\
+  \hspace{0.9cm}Universidad Tecnológica Nacional\\
+  \hspace{0.9cm}Rosario, CP 2000 \\
+  \hspace{0.9cm}\texttt{karengalarza94.kg@gmail.com} \\
+  \And
+  \hspace{0.9cm}P. Uriel Alvarez\\
+  \hspace{0.9cm}Ingeniería en Sistemas de Información\\
+  \hspace{0.9cm}Universidad Tecnológica Nacional\\
+  \hspace{0.9cm}Rosario, CP 2000 \\
+  \hspace{0.9cm}\texttt{p.uriel.alvarez@outlook.com} \\
+  \And
+  %% \AND
+  %% Coauthor \\
+  %% Affiliation \\
+  %% Address \\
+  %% \texttt{email} \\
+  %% \And
+  %% Coauthor \\
+  %% Affiliation \\
+  %% Address \\
+  %% \texttt{email} \\
+  %% \And
+  %% Coauthor \\
+  %% Affiliation \\
+  %% Address \\
+  %% \texttt{email} \\
+}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+Este trabajo tiene como fin
+el empleo de nuestra primera simulación, con el objetivo de desmitificar estadísticamente la verdadera probabilidad de
+obtener ganancias con un medio ideal, como es nuestra ruleta simulada. 
+
+\end{abstract}
+
+
+% keywords can be removed
+%\keywords{First keyword \and Second keyword \and More}
+
+
+\section{Introducción}
+La ruleta es considerada como el juego de casino más antiguo. Se originó en Francia, pero se popularizó en todo el
+mundo como un juego de casino con clase que atrae a todo tipo de jugadores.
+Apostar en algún juego lleva a controversias de todos los puntos de vista: en este trabajo buscaremos una visión objetiva de este problema. 
+\newline
+En el juego de la ruleta existen diferentes estrategias que son utilizadas. Para este trabajo elegimos tres de esas estrategias para analizarlas mediante simulación. Para hacer este estudio desarrollamos un programa escrito en lenguaje python para simular esta situación y representar gráficamente el comportamiento para un posterior análisis.
+Las estrategias elegidas son Martingala, Fibonacci y D'alembert.
+
+\section{Descripción}
+\label{sec:headings}
+En este trabajo simularemos apuestas en la ruleta utilizando las técnicas antes mencionadas, para ello escribiremos un código en lenguaje Python utilizando las librerías matplotlib, numpy y random. El experimento consiste en simular las apuestas de un jugador. Para cada una de las técnicas elegidas consideraremos dos casos:
+\begin{enumerate}
+  \item Que quien apuesta posee capital limitado (para este experimento el capital inicial es de \$5000)
+  \item Que quien apuesta posee capital infinito
+\end{enumerate}
+Repetimos este experimento (de 1000 tiradas) 5 veces.
+
+\begin{comment}
+\subsection{Generación de valores aleatorios enteros}
+\lipsum[5]
+\begin{equation*}
+\xi _{ij}(t)=P(x_{t}=i,x_{t+1}=j|y,v,w;\theta)= {\frac {\alpha _{i}(t)a^{w_t}_{ij}\beta _{j}(t+1)b^{v_{t+1}}_{j}(y_{t+1})}{\sum _{i=1}^{N} \sum _{j=1}^{N} \alpha _{i}(t)a^{w_t}_{ij}\beta _{j}(t+1)b^{v_{t+1}}_{j}(y_{t+1})}}
+\end{equation*}
+\end{comment}
+
+\subsection{Conceptos teóricos relevantes}
+ \begin{itemize}
+    \item Frecuencia relativa: cociente entre la frecuencia absoluta de un determinado valor y el número total de datos.La suma de las frecuencias relativas es igual a 1.
+    \item  Frecuencia absoluta :número de veces que un evento se reitera en una muestra o en un experimento.
+    \item Capital: dinero y conjunto de bienes convertibles en él que posee una persona.
+    \item  Acotado: limitado.
+    \item  Estrategias de juego de ruleta: Como mencionamos anteriormente existen una gran cantidad de estrategias pero en este trabajo estudiaremos las siguientes:
+    \begin{itemize}
+      \item \textbf{Estrategia Martingala (Martingale): } Es una de las estrategias de ruleta más famosas y se puede utilizar no solo en casino online, sino en apuestas y otros juegos de azar. Hay que tener en cuenta que el uso de Martingala en apuestas como un sistema válido también. Esta estrategia de ruleta nació en Francia en el siglo XVIII y consiste en apostar una cantidad fija en la apuesta inicial y en caso de pérdida, duplicar esta cantidad apostada hasta que se gane nuestra apuesta.
+De esta forma, se habrá logrado como beneficio la cantidad que pusimos como nuestra apuesta inicial cuando empezamos a jugar a la ruleta. Se utiliza en las apuestas sencillas como doble o nada: rojo-negro, par-impar, etc.
+
+\item \textbf{Estrategia D’alembert: }
+Este método para ganar en ruleta se basa en la Ley de Equilibrio, desarrollada por el matemático francés del mismo nombre del siglo XVIII. Consiste en ir añadiendo una unidad de apuesta tras un fallo. Del mismo modo, se restará justo ese mismo montante en caso de acierto. Es una de las estrategias de ruleta europea o sistemas más usados en el casino y también es conocido bajo el nombre de sistema de la Pirámide. Es un sistema de apuestas para jugadores que quieran mantener un número de apuestas determinados y unas pérdidas al mínimo.
+ 
+El sistema D’Alembert está diseñado para que, a igual número de jugadas ganadoras y perdedoras (equilibrio), el resultado final ofrezca un balance positivo igual al número de jugadas ganadoras de la serie. En este caso, la ganancia es de 3 unidades, que es el número de veces que hemos ganado o perdido.
+\item \textbf{Estrategia secuencia de  Fibonacci}
+Estrategia ruleta creada por Leonardo Pisano Bigollo, al que se le conoció popularmente como Fibonacci. Fue un famoso matemático italiano nacido en el año 1170. Se hizo famoso por descubrir la secuencia de números conocido por su nombre y en que cada número es la suma de los dos números anteriores: \newline 1-1-2-3-5-8-13-21-34-55-89-144-233-377-610.
+\end{itemize}
+\end{itemize}
+
+
+%%Insertar una imagen
+%%\includegraphics[width=\textwidth]{nombre_de_la_imagen.extensión}
+
+%%Insertar dos imágenes en la misma fila
+%%\begin{subfigure}[b]{0.45\linewidth}
+%%\includegraphics[scale=0.5]{nombre_de_la_imagen.extensión}
+%%\end{subfigure}
+%%\begin{subfigure}[b]{0.45\linewidth}
+%%\includegraphics[scale=0.5]{nombre_de_la_otra_imagen.extensión}
+%%\end{subfigure}
+
+\section{Exposición de los resultados y análisis}
+\subsection{Martingala}
+También conocida como "estrategia de doblar", consiste en volver a apostar por el total perdido luego de perder en un
+juego de azar. En la nueva apuesta, el jugador tiene la posibilidad de recobrar todas sus pérdidas, por lo que podría
+parecer que a largo plazo la esperanza de ganancia con esta estrategia se mantienen constantes y a favor del jugador. De
+hecho, estadísticamente es así: el capital medio del jugador (esto es, el dinero que el jugador tiene a su disposición
+para jugar) se mantiene constante. El problema reside en que, al incurrir en sucesivas pérdidas, el jugador que siga la
+estrategia de la martingala se ve obligado a apostar de nuevo cantidades cada vez mayores (las pérdidas acumuladas),
+que tienden a crecer exponencialmente. Al cabo de unos pocos ciclos de apuestas, el jugador, cuyos recursos son
+habitualmente muy inferiores a los de la banca, se ve arruinado al ser incapaz de apostar de nuevo por el total de sus
+pérdidas.
+\newpage\subsubsection{Capital acotado}
+    \begin{figure*}[!htb]
+    \begin{minipage}{0.48\textwidth}
+     \centering
+     \includegraphics[width=1.1\linewidth]{Imágenes/Martingala_acotado_frec_rel.png}
+     \caption*{Martingala: frecuencia relativa con capital acotado}
+   \end{minipage}\hfill
+   \begin{minipage}{0.48\textwidth}
+     \centering
+     \includegraphics[width=1.1\linewidth]{Imágenes/Martingala_acotado_dinero.png}
+     \caption*{Martingala: beneficio acumulado con capital acotado}
+   \end{minipage}
+\end{figure*}
+
+Se puede ver en el capital acotado, como a medida que se tiene una mayor cantidad de apuestas realizadas la frecuencia relativa converge y tiende a estabilizarse.A pesar de que la grafica del beneficio acumulado tiene pendiente positiva se pierde una cantidad de dinero relevante respecto al capital principal.
+
+
+\subsubsection{Capital infinito}
+\begin{figure*}[!htb]
+   \begin{minipage}{0.48\textwidth}
+     \centering
+     \includegraphics[width=1.1\linewidth]{Imágenes/Martingala_infinito_frec_rel.png}
+     \caption*{Martingala: frecuencia relativa con capital infinito}
+   \end{minipage}\hfill
+   \begin{minipage}{0.48\textwidth}
+     \centering
+     \includegraphics[width=1.1\linewidth]{Imágenes/Martingala_infinito_dinero.png}
+     \caption*{Martingala: beneficio acumulado con capital infinito}
+   \end{minipage}
+\end{figure*}
+
+Podemos ver en el capital infinito como converge la frecuencia relativa al igual que con el capital acotado.La diferencia se puede observar en el beneficio acumulado, en este caso a mayor capital la perdida mas representativa es de -8000.
+
+
+
+\newpage
+
+\subsection{Fibonacci}
+Se basa en la secuencia matemática que es una progresión acumulativa, ya que cada siguiente número es igual
+a la suma de los dos números que lo preceden El jugador debe apostar a través de la secuencia, dependiendo de si gana
+o pierde. Cuando gana, tiene que retroceder dos pasos en la secuencia. En caso de que la primera apuesta resulta ser
+ganadora, simplemente comenzará la secuencia de nuevo. Si está más adelante en la secuencia, solo retrocede dos
+números y apuesta esa cantidad. Esto sigue hasta que alcanza el inicio de la secuencia y tiene un beneficio. Cuanto más
+lejos llegue en la secuencia, mayores serán sus pérdidas.
+\subsubsection{Capital acotado}
+\begin{figure*}[!htb]
+   \begin{minipage}{0.48\textwidth}
+     \centering
+     \includegraphics[width=1.1\linewidth]{Imágenes/Fibonacci_acotado_frec_rel.png}
+     \caption*{Fibonacci: frecuencia relativa con capital acotado}\label{Fig:Data1}
+   \end{minipage}\hfill
+   \begin{minipage}{0.48\textwidth}
+     \centering
+     \includegraphics[width=1.1\linewidth]{Imágenes/Fibonacci_acotado_dinero.png}
+     \caption*{Fibonacci: beneficio acumulado con capital acotado}\label{Fig:Data2}
+   \end{minipage}
+\end{figure*}
+
+En nuestra grafica de capital acotado se puede apreciar como la frecuencia relativa decrece a medida que aumenta el numero total de apuestas.En la representacion de beneficio acumulado los resultados inicializan estables en las primeras 200 tiradas, luego los valores del beneficio son muy aleatorios.
+
+\subsubsection{Capital infinito}
+\begin{figure*}[!htb]
+   \begin{minipage}{0.48\textwidth}
+     \centering
+     \includegraphics[width=1.1\linewidth]{Imágenes/Fibonacci_infinito_frec_rel.png}
+     \caption*{Fibonacci: frecuencia relativa con capital infinito}\label{Fig:Data1}
+   \end{minipage}\hfill
+   \begin{minipage}{0.48\textwidth}
+     \centering
+     \includegraphics[width=1.1\linewidth]{Imágenes/Fibonacci_infinito_dinero.png}
+     \caption*{Fibonacci: beneficio acumulado con capital infinito}\label{Fig:Data2}
+   \end{minipage}
+\end{figure*}
+
+En el capital infinito la frecuencia relativa tambien converge a 0.5 aproximadamente.El beneficio acumulado tiende a crecer pero en las apuestas cercanas a 400 se ve una perdida pronunciada de -2500.
+\newpage
+
+\subsection{D'Alembert}
+Tanto la estrategia martingala como la Fibonacci funcionan aumentando y disminuyendo la cantidad apostada en función
+del resultado de cada apuesta. La estrategia d’Alembert (un poco más segura porque las diferencias entre las cantidades apostadas son mucho menores) funciona de forma similar: consiste en apostar una unidad. En caso de acierto, se apuesta la misma cantidad que antes, en caso de fallo la cantidad apostada aumenta en uno. Este método también se conoce como la "Ley del equilibrio": significa que, a largo plazo, el número de aciertos y fallos se compensarán (es una apuesta de probabilidad equilibrada).
+
+\subsubsection{Capital acotado}
+\begin{figure*}[!htb]
+   \begin{minipage}{0.48\textwidth}
+     \centering
+     \includegraphics[width=1.1\linewidth]{Imágenes/Dalembert_acotado_frec_rel.png}
+     \caption*{D'Alembert: frecuencia relativa con capital acotado}\label{Fig:Data1}
+   \end{minipage}\hfill
+   \begin{minipage}{0.48\textwidth}
+     \centering
+     \includegraphics[width=1.1\linewidth]{Imágenes/Dalembert_acotado_dinero.png}
+     \caption*{D'Alembert: beneficio acumulado con capital infinito}\label{Fig:Data2}
+   \end{minipage}
+\end{figure*}
+Con capital acotado la frecuencia relativa también converge a 0.5, el valor esperado. En cuanto al dinero, podemos ver que la función tiende a crecer y decrecer continuamente: por momentos la racha es de aciertos, pero finalmente tiende a perder tanto (o más) de lo que ganó. 
+
+\subsubsection{Capital infinito}
+\begin{figure*}[!htb]
+   \begin{minipage}{0.48\textwidth}
+     \centering
+     \includegraphics[width=1.1\linewidth]{Imágenes/Dalembert_infinito_frec_rel.png}
+     \caption*{D'Alembert: frecuencia relativa con capital infinito}\label{Fig:Data1}
+   \end{minipage}\hfill
+   \begin{minipage}{0.48\textwidth}
+     \centering
+     \includegraphics[width=1.1\linewidth]{Imágenes/Dalembert_infinito_dinero.png}
+     \caption*{D'Alembert: beneficio acumulado con capital infinito}\label{Fig:Data2}
+   \end{minipage}
+   Nuevamente converge la frecuencia relativa a 0.5. Respecto al dinero, podemos decir que la función presenta un comportamiento que parece tender al decrecimiento. Esto indica que la pérdida de dinero es mayor a medida que se sigue apostando utilizando este método.
+  
+\end{figure*}
+
+\newpage
+\section{Conclusiones}
+Aunque para esta simulación utilizamos unos pocos métodos para estudiar las posibilidades de ganar en la ruleta (existen muchísimos más) podemos observar que, tanto con capital acotado como infinito, los resultados conducen a la misma conclusión: la probabilidad de ganar dinero a largo plazo es muy pequeña, el casino nunca pierde. Además, el capital en la vida real es limitado, lo que puede impedir llegar a una racha ganadora (esto implica perder todo el dinero inicial). Por todo lo anterior, consideramos que la única forma de no perder dinero en el casino es no apostando.
+
+\bibliographystyle{unsrt}  
+%\bibliography{references}  %%% Remove comment to use the external .bib file (using bibtex).
+%%% and comment out the ``thebibliography'' section.
+
+
+%%% Comment out this section when you \bibliography{references} is enabled.
+\renewcommand\refname{Bibliografía} 
+\begin{thebibliography}{1}
+
+\bibitem{kour2014real}
+Documentación oficial libreria Numpy. 
+\newblock
+\newblock En {\em https:// numpy.org/}.
+
+\bibitem{kour2014real}
+Pagina python para impacientes. 
+\newblock
+\newblock En {\em  https://python-para-impacientes.blogspot.com/}.
+
+\bibitem{kour2014real}
+Pagina probabilidad y estadistica con python. 
+\newblock
+\newblock En {\em  https://relopezbriega.github.io/blog/2015/06/27/probabilidad-y-estadistica-con-python/}.
+
+\bibitem{kour2014real}
+Pagina edicion idioma Latex. 
+\newblock
+\newblock En {\em 
+https://ondiz.github.io/cursoLatex/Contenido/06.Idioma.html}
+
+\bibitem{kour2014real}
+Pagina videos de guia para metodos. 
+\newblock
+\newblock En {\em 
+https://www.youtube.com/watch?v=Mh8MpOSwA-I}
+
+\bibitem{kour2014real}
+Pagina guia para metodos. 
+\newblock
+\newblock En {\em 
+https://curiosidades.top/metodos-para-jugar-a-la-ruleta/}
+
+\end{thebibliography}
+\end{document}

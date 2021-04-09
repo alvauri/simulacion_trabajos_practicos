@@ -1,18 +1,77 @@
+#Trabajo Practico 1.2 - Analisis Económico-Matemático de Apuestas En Ruleta
+#Integrantes: Alvarez, Elicegui, Galarza, Muñoz
 import random as rnd
-import matplotlib.pyplot as plt
-import numpy as np
-import os
+import os  # Importo os porque me permite usar funciones del sistema y en este programa la uso para limpiar la terminal a la hora de mostrar los menus
+import matplotlib.pyplot as plt  # Importo la libreria matplotlib
+import numpy as np  # Importo la libria Numpy
+import os  # Acceso a funciones del sistema operativo
 
-global cantApFav
+global cantApFav  # Define una variablo global cantidad apuestas Favorables
 
-def ruleta():
-    return rnd.randint(0,36)
 
-def fib(n):
-    if n < 2:
-        return 1
-    else:
-        return fib(n - 1) + fib(n - 2)
+def ruleta():  # Defino una funcion ruleta la cuál me devuelve un numero aleatoreo entre 0 y 37
+    return rnd.randint(0, 36)
+
+
+def menu(): #Defino la funcion de menu principal
+    os.system('cls')
+    print("*** MENU DE OPCIONES ***")
+    print("Selecciona una opción")
+    print("1 - Martingala")
+    print("2 - Fibonacci")
+    print("3 - D'Alambert")
+    print("0 - Salir")
+    while True:
+        try:
+            op = int(input("Ingrese su opción:  "))
+        except ValueError:
+            print("Debes ingresar un número (valido)")
+            continue
+        if op < 0 or op > 3:
+            print("Debes ingresar un número comprendido entre 0 y 3")
+            continue
+        else:
+            break
+    return op
+
+
+def menu2(s: str) -> int:   #este es el submenu --Los tipos en las funciones no son necesarios pero es una buena practica
+    os.system('cls')
+    print("***"+s+"***")
+    print(" ")
+    print("Selecciona un tipo de capital para la simulación")
+    print("1 - Capital infinito")
+    print("2 - Capital acotado")
+    print("0 - Salir")
+    while True:
+        try:
+            op = int(input("Ingrese su opción:  "))
+        except ValueError:
+            print("Debes ingresar un número (valido)")
+            continue
+        if op < 0 or op > 2:
+            print("Debes ingresar un número comprendido entre 0 y 2")
+            continue
+        else:
+            break
+    return op
+
+
+def valida_monto(): #Funcion para validar que ingrese un monto correcto NO letras, NO numeros negativos
+    while True:
+        try:
+            monto = int(
+                input('Indique el monto de capital inicial con el que comenzaremos:  '))
+        except ValueError:
+            print("Debes ingresar un capital valido")
+            continue
+        if monto < 0:
+            print("Debes ingresar un capital superior a 0")
+            continue
+        else:
+            break
+    return monto
+
 
 def girar(calculaPromedio, modo, dinero_tot = None):
     if dinero_tot == None:
@@ -31,26 +90,26 @@ def girar(calculaPromedio, modo, dinero_tot = None):
     for i in range(tiradas):
         result = ruleta()
         if (modo == "Martingala"):
-            if (result%2 == apuesta) & (result != 0):
+            if (result % 2 == apuesta) & (result != 0):
                 dinero_disp += valorApuesta
                 valorApuesta = 1
-                cantApFav+=1
+                cantApFav += 1
             else:
                 dinero_disp -= valorApuesta
                 valorApuesta = valorApuesta*2
         elif (modo == "D'Alambert"):
-            if (result%2 == apuesta) & (result != 0):
-                cantApFav+=1
+            if (result % 2 == apuesta) & (result != 0):
+                cantApFav += 1
                 dinero_disp += valorApuesta
                 if apuesta > 1:
-                    valorApuesta = valorApuesta -1
+                    valorApuesta = valorApuesta - 1
             else:
                 dinero_disp -= valorApuesta
                 valorApuesta = valorApuesta + 1
         elif (modo == "Fibonacci"):
-            contafib = 0 #OJO AQUI YO PUSE ESTO NO SE SI ESTA BIEN!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            contafib = 0  # OJO AQUI !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             if (result % 2 == apuesta) & (result != 0):
-                dinero_disp += valorApuesta        
+                dinero_disp += valorApuesta
                 cantApFav += 1
                 if contafib < 3:
                     contafib = 1
@@ -63,17 +122,23 @@ def girar(calculaPromedio, modo, dinero_tot = None):
         resultados.append(dinero_disp)
         frecRelativa.append(cantApFav/(i+1))
         if calculaPromedio:
-            promedio[0][i]=promedio[0][i]+dinero_disp/repeticiones
-            promedio[1][i]=promedio[1][i]+cantApFav/(i+1)/repeticiones
+            promedio[0][i] = promedio[0][i]+dinero_disp/repeticiones
+            promedio[1][i] = promedio[1][i]+cantApFav/(i+1)/repeticiones
         if dinero_tot != None:
             if dinero_disp == 0:
                 break
-            elif dinero_disp<valorApuesta:
+            elif dinero_disp < valorApuesta:
                 valorApuesta = dinero_disp
     results = []
     results.append(frecRelativa)
     results.append(resultados)
     return results
+
+def fib(n):
+    if n < 2:
+        return 1
+    else:
+        return fib(n - 1) + fib(n - 2)
 
 def correr(modo, dinero_tot = None):
     if tiradas == 1:
@@ -133,91 +198,47 @@ def correr(modo, dinero_tot = None):
             plt.hlines(0,0,tiradas, color='red')
         plt.xlabel('Numero de apuestas')
         plt.show()
-
-def menu():
-    os.system('cls')
-    print ("Selecciona una opción")
-    print ("1 - Martingala")
-    print ("2 - Fibonacci")
-    print ("3 - D'Alambert")
-    print ("0 - Salir")
-
-def martingalaMenu():
-    os.system('cls')
-    print ("Selecciona una opción")
-    print ("1 - MARTINGALA - Capital infinito")
-    print ("2 - MARTINGALA - Capital acotado")
-    print ("0 - Menu principal")  
-
-def fibonacciMenu():
-    os.system('cls')
-    print ("Selecciona una opción")
-    print ("1 - FIBONACCI - Capital infinito")
-    print ("2 - FIBONACCI - Capital acotado")
-    print ("0 - Menu principal")
-
-def  dAlambertMenu():
-    os.system('cls')
-    print ("Selecciona una opción")
-    print ("1 - D'Alambert - Capital infinito")
-    print ("2 - D'Alambert - Capital acotado")
-    print ("0 - Menu principal")  
-
+# Programa principal
 if __name__ == '__main__':
-
-    promedio = [[],[]]
-    repeticiones = int(input('Indique la cantidad de veces a repetir el experimento:'))
-    tiradas = int(input('Indique la cantidad de veces que se hara girar la ruleta:'))
-    cap_ini = int(input("Indique el monto de capital inicial con el que comenzaremos: "))
-
+    os.system('cls')
+    print("***CARGA DE DATOS INICIALES***")
+    promedio = [[], []]
+    repeticiones = int(input('Indique la cantidad de veces a repetir el experimento:  '))
+    tiradas = int(input('Indique la cantidad de veces que se hara girar la ruleta:  '))
+    
     while True:
-
-        menu()
-        seleccion = input("Inserte su opcion >> ")
-        if seleccion=="1":
+        estrategia = menu()  # estrategia le puse este nombre por Seleccion de estrategia
+        if estrategia == 1:
             while True:
-                martingalaMenu()
-                seleccion = input("Inserte su opcion >> ")
-                if seleccion=="1":
+                seleccion = menu2("Estrategia seleccionada Martingala")
+                if seleccion == 2:
+                    cap_ini = valida_monto()
+                    correr("Martingala", cap_ini)
+                elif seleccion == 1:
                     correr("Martingala")
-                elif seleccion=="2":
-                    correr("Martingala",cap_ini)
-                elif seleccion=="0":
-                    break
                 else:
-                    print(" ")
-                    input("La opcion ingresada no es valida.")
-                os.system('cls')
-        elif seleccion=="2":
+                    break
+        elif estrategia == 2:
             while True:
-                fibonacciMenu()
-                seleccion = input("Inserte su opcion >> ")
-                if seleccion=="1":
+                seleccion = menu2("Estrategia seleccionada Fibonacci")
+                if seleccion == 2:
+                    cap_ini = valida_monto()
+                    correr("Fibonacci", cap_ini)
+                elif seleccion == 1:
                     correr("Fibonacci")
-                elif seleccion=="2":
-                    correr("Fibonacci",cap_ini)
-                elif seleccion=="0":
-                    break
                 else:
-                    print(" ")
-                    input("La opcion ingresada no es valida.")
-                os.system('cls')
-        elif seleccion=="3":
+                    break
+        elif estrategia == 3:
             while True:
-                dAlambertMenu()
-                seleccion = input("Inserte su opcion >> ")
-                if seleccion=="1":
+                seleccion = menu2("Estrategia seleccionada D'Alambert")
+                if seleccion == 2:
+                    cap_ini = valida_monto()
+                    correr("D'Alambert", cap_ini)
+                elif seleccion == 1:
                     correr("D'Alambert")
-                elif seleccion=="2":
-                    correr("D'Alambert",cap_ini)
-                elif seleccion=="0":
+                else: 
                     break
-                else:
-                    print(" ")
-                    input("La opcion ingresada no es valida.")
-                os.system('cls')
-        elif seleccion=="0":
-            break
         else:
-            print ("")
-            input("La opcion ingresada no es valida.")
+            print("Saliendo...")
+            break
+    print("FIN")
